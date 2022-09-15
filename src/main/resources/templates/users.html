@@ -15,6 +15,7 @@
                         <th scope="col">First name</th>
                         <th scope="col">Last name</th>
                         <th scope="col">Login</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,6 +24,10 @@
                         <td th:text="${user.firstName}"></td>
                         <td th:text="${user.lastName}"></td>
                         <td th:text="${user.login}"></td>
+                        <td>
+                            <a class="btn btn-success" th:href="${ '/mvc/user/'+ user.id}" role="button">Edytuj</a>
+                            <span><a class="btn btn-danger" th:href="${'/mvc/user/delete/' + user.id}" role="button">Usuń</a></span>
+                        </td>
                     </tr>
                 </tbody>
             </table>

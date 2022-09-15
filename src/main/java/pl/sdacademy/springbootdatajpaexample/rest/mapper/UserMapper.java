@@ -2,6 +2,7 @@ package pl.sdacademy.springbootdatajpaexample.rest.mapper;
 
 import pl.sdacademy.springbootdatajpaexample.entity.User;
 import pl.sdacademy.springbootdatajpaexample.mvc.CreateUserForm;
+import pl.sdacademy.springbootdatajpaexample.mvc.UpdateUserForm;
 import pl.sdacademy.springbootdatajpaexample.rest.dto.UserDto;
 
 public class UserMapper {
@@ -16,6 +17,16 @@ public class UserMapper {
 
     public static User toEntity(CreateUserForm form) {
         return User.builder()
+                .firstName(form.getFirstName())
+                .lastName(form.getLastName())
+                .login(form.getLogin())
+                .password(form.getPassword())
+                .build();
+    }
+
+    public static User toEntity(UpdateUserForm form) {
+        return User.builder()
+                .id(form.getId())
                 .firstName(form.getFirstName())
                 .lastName(form.getLastName())
                 .login(form.getLogin())

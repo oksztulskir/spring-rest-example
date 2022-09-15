@@ -3,10 +3,7 @@ package pl.sdacademy.springbootdatajpaexample.mvc;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.sdacademy.springbootdatajpaexample.rest.mapper.UserMapper;
 import pl.sdacademy.springbootdatajpaexample.service.UserService;
 
@@ -29,9 +26,20 @@ public class UserController {
     }
 
     @PostMapping(path = "/add")
-    public String create(@ModelAttribute("user") CreateUserForm form, ModelMap model) {
+    public String create(@ModelAttribute("user") CreateUserForm form) {
         userService.create(UserMapper.toEntity(form));
-        model.addAttribute("users", userService.findAll());
+        return "redirect:/mvc/user";
+    }
+
+    @GetMapping(path = "/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, ModelMap model) {
+        model.addAttribute("user", userService.find(id));
+        return "update-user";
+    }
+
+    @PostMapping(path = "/update")
+    public String update(@ModelAttribute("user") UpdateUserForm form) {
+        userService.update(UserMapper.toEntity(form));
         return "redirect:/mvc/user";
     }
 }
