@@ -1,16 +1,15 @@
 package pl.sdacademy.springbootdatajpaexample.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @ToString
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
     public User(String firstName, String lastName, String login, String password) {
         this.firstName = firstName;
