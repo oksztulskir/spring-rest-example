@@ -11,11 +11,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    public User(String firstName, String lastName, String login, String password) {
+    public User(String firstName, String lastName, String login, String password, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.password = password;
+        this.role = role;
     }
 
     @Id
@@ -31,9 +32,12 @@ public class User {
     private String lastName;
 
     @Setter
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String login;
 
     @Setter
     private String password;
+
+    @Setter
+    private String role;
 }

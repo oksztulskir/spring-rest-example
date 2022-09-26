@@ -3,6 +3,7 @@ package pl.sdacademy.springbootdatajpaexample.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.sdacademy.springbootdatajpaexample.entity.User;
 import pl.sdacademy.springbootdatajpaexample.repository.UserRepository;
@@ -15,6 +16,7 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     public User find(long id) {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("User with id=" + id + " not found!"));
@@ -26,6 +28,7 @@ public class UserService {
     }
 
     public User create(User user) {
+        user.setPassword(encodePassword(user.getPassword()));
         return repository.save(user);
     }
 
@@ -34,6 +37,7 @@ public class UserService {
     }
 
     public User update(User user) {
+        user.setPassword(encodePassword(user.getPassword()));
         return repository.save(user);
     }
 
@@ -49,7 +53,7 @@ public class UserService {
             originalUser.setLogin(user.getLogin());
         }
         if (user.getPassword() != null) {
-            originalUser.setPassword(user.getPassword());
+            originalUser.setPassword(encodePassword(user.getPassword()));
         }
 
         return repository.save(originalUser);
@@ -57,5 +61,9 @@ public class UserService {
 
     public Page<User> getPage(Pageable pageable) {
         return repository.findAll(pageable);
+    }
+
+    private String encodePassword(String password) {
+        return passwordEncoder.encode(password);
     }
 }

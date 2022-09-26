@@ -1,13 +1,13 @@
 package pl.sdacademy.springbootdatajpaexample.repository;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import pl.sdacademy.springbootdatajpaexample.entity.User;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     List<User> findAllByLastName(String lastName);
@@ -31,4 +31,6 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
     @Transactional
     void deleteUserByLogin(String login);
+
+    Optional<User> findByLogin(String login);
 }
