@@ -1,6 +1,7 @@
 package pl.sdacademy.springbootdatajpaexample.mvc;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,14 @@ public class UserController {
         return "users";
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping(path = "/add")
     public String showCreateForm(ModelMap model) {
         model.addAttribute("user", new CreateUserForm());
         return "create-user";
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping(path = "/add")
     public String create(@ModelAttribute("user") CreateUserForm form) {
         userService.create(UserMapper.toEntity(form));
